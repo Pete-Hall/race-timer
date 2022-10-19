@@ -8,7 +8,10 @@ import Configuration from './components/Configuration';
 
 function App() {
   let initialTime = 60;
+
   const [currentTime, setCurrentTime] = useState(initialTime);
+
+  const [numOfContestants, setNumOfContestants] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,13 +26,21 @@ function App() {
 				<Link to="/config">Config Screen</Link> |{" "}
 				<Link to="/game">Game Screen</Link>
 				<Routes>
-					<Route path="/config" element={<Configuration />} />
+					<Route
+						path="/config"
+						element={
+							<Configuration setNumOfContestants={setNumOfContestants} />
+						}
+					/>
 					<Route
 						path="/game"
 						element={
 							<Background>
 								<Timer currentTime={currentTime} />
-								<Race currentTime={currentTime} />
+								<Race
+									currentTime={currentTime}
+									numOfContestants={numOfContestants}
+								/>
 							</Background>
 						}
 					/>

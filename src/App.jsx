@@ -3,6 +3,8 @@ import Timer from './components/Timer';
 import Race from './components/Race';
 import { useState, useEffect } from 'react';
 import Background from './components/Background';
+import {BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Configuration from './components/Configuration';
 
 function App() {
   let initialTime = 60;
@@ -16,13 +18,25 @@ function App() {
   });
 
   return (
-    <>
-      <Background>
-        <Timer currentTime={currentTime} />
-        <Race currentTime={currentTime} />
-      </Background>
-    </>
-  );
+		<>
+			<Router>
+				<Link to="/config">Config Screen</Link> |{" "}
+				<Link to="/game">Game Screen</Link>
+				<Routes>
+					<Route path="/config" element={<Configuration />} />
+					<Route
+						path="/game"
+						element={
+							<Background>
+								<Timer currentTime={currentTime} />
+								<Race currentTime={currentTime} />
+							</Background>
+						}
+					/>
+				</Routes>
+			</Router>
+		</>
+	);
 }
 
 export default App;

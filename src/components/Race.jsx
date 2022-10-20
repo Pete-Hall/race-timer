@@ -3,15 +3,29 @@ import { contestantStyles } from '../styles';
 import { contestants } from '../assets/data';
 import {useState, useEffect} from 'react';
 
-function Race({ currentTime, numOfContestants }) {
+function Race({ currentTime, numOfContestants, startTimer }) {
 	useEffect(() => {
 		// console.log(allContestants);
 		// console.log(currentTime);
-    console.log(numOfContestants); //TODO: need to show correct # of contestants on DOM. - can i put a limit on the DOM? or map through a copy of the array w/correct #?
-		move();
+		console.log(numOfContestants);
+		if (startTimer) {move()};
+		winner();
 	}, [currentTime]);
 
 	const [allContestants, setAllContestants] = useState(contestants);
+
+	const winner = () => {
+		if (currentTime === 0) {
+			let winner = allContestants[0];
+			for (let i = 0; i < allContestants.length; i++) {
+				if (allContestants[i].xpos > winner.xpos) {
+					winner = allContestants[i];
+				}
+			}
+
+			return console.log(winner);
+		}
+	};
 
 	const move = () => {
 		for (let i = 0; i < allContestants.length; i++) {
@@ -25,9 +39,12 @@ function Race({ currentTime, numOfContestants }) {
 
 	return (
 		<div style={contestantStyles.contestantList}>
-			{allContestants.map((person) => (
-				<Contestant key={person.id} name={person.name} xpos={person.xpos} />
-			))}
+			{/* https://stackoverflow.com/questions/42374873/limit-items-in-a-map-loop */}
+			{allContestants
+				.filter((contestant, index) => index < numOfContestants)
+				.map((person, index) => (
+					<Contestant key={index} name={person.name} xpos={person.xpos} />
+				))}
 		</div>
 	);
 }

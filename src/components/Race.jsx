@@ -8,22 +8,23 @@ function Race({ currentTime, numOfContestants, startTimer }) {
 		// console.log(allContestants);
 		// console.log(currentTime);
 		console.log(numOfContestants);
-		if (startTimer) {move()};
-		winner();
+		if (startTimer) {
+			move();
+		}
+		winner(); // asynch function? setState in move() is asynchronous. (do move() then winner()?)
 	}, [currentTime]);
 
 	const [allContestants, setAllContestants] = useState(contestants);
 
-	const winner = () => {
+	const winner = () => { 
 		if (currentTime === 0) {
 			let winner = allContestants[0];
-			for (let i = 0; i < allContestants.length; i++) {
+			for (let i = 0; i < allContestants.filter((contestant, index) => index < numOfContestants).length; i++) {
 				if (allContestants[i].xpos > winner.xpos) {
 					winner = allContestants[i];
 				}
 			}
-
-			return console.log(winner);
+			return alert(winner); 
 		}
 	};
 

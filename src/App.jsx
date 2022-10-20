@@ -20,8 +20,7 @@ function App() {
 				setCurrentTime(currentTime - 1); 
 			}, 1000);
       return () => clearInterval(interval);
-    }
-		
+    }		
 	});
 
 	return (
